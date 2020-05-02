@@ -1,20 +1,30 @@
 from github import Github
 import os
-g=Github(os.environ['GITHUB_AUTH_TOKEN'])
+import datetime
+import yaml
+g=Github('censored_for_privacy')
+
+with open('config.yml') as f:
+    config =yaml.load(f,Loader=yaml.FullLoader)
+    print(type(config))
 
 for repo in g.get_user().get_repos():
    
-    
-    if(repo.name=="summa"):
-        print(type(repo))
-        print(repo.html_url)
-        for commit in repo.get_commits():
-            print(commit.sha)
+    for configData in config['repos']:
 
-        #print(dir(repo))
 
-# for repo in gitty.get_user().get_repos():
-#     print(repo.name)
-#     repo.edit(has_wiki=False)
-#     # to see all the available attributes and methods
-#     print(dir(repo))
+        if(repo.html_url==configData['url']):
+           
+            print(type(repo))
+            print(repo.html_url)
+            commit = repo.get_commits()[0]
+            if(configData['lastCommitHash']!=commit.sha):
+                configData['lastCommitHash']=commit.sha
+                configData['lastCloned']=datetime.datetime.now()
+                print(commit.sha)
+            
+            
+
+
+with open('config.yml', 'w') as f:
+    data = yaml.dump(config, f)
