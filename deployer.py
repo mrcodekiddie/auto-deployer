@@ -2,6 +2,7 @@ from github import Github
 import os
 import datetime
 import yaml
+from  dotenv import load_dotenv
 g=Github('censored_for_privacy')
 
 with open('config.yml') as f:
