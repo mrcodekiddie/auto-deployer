@@ -1,12 +1,9 @@
 repos:
-- lastCloned: 2020-05-02 15:52:46.376086
+- framework: flask
   language: python
-  framework: flask
-  lastCommitHash: 3362a75f2eaa52bdee0065f037e7d7da088788a8
+  lastCloned: 2020-05-03 04:24:06.566717
+  lastCommitHash: 1e4d3b506cbd6b01bcba13b442cbb0f36f2f4157
   url: https://github.com/mrcodekiddie/summa
-
-
 - lastCloned: null
   lastCommitHash: null
   url: well
-  

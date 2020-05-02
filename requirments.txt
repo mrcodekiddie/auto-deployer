@@ -9,7 +9,6 @@ mccabe==0.6.1
 PyGithub==1.50
 PyJWT==1.7.1
 pylint==2.5.0
-python-dotenv==0.13.0
 PyYAML==5.3.1
 requests==2.23.0
 six==1.14.0
