@@ -19,12 +19,16 @@ for repo in g.get_user().get_repos():
 
         if(repo.html_url==configData['url']):
            
-            print(type(repo))
+           
             print(repo.html_url)
             commit = repo.get_commits()[0]
             if(configData['lastCommitHash']!=commit.sha):
                 configData['lastCommitHash']=commit.sha
                 configData['lastCloned']=datetime.datetime.now()
+                sshCloneUrl=repo.ssh_url
+                clone_path=os.environ['HOME']+os.sep+"deploy"+os.sep
+                os.system("git clone "+sshCloneUrl +" "+ clone_path+" --depth=1")
+                print(sshCloneUrl)
                 print(commit.sha)
             
             
