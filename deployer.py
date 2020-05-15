@@ -6,12 +6,13 @@ import shutil
 import socket
 import subprocess
 import re
-
+g
 #GITHUB_AUTH_TOKEN=(os.environ["GITHUB_AUTH_TOKEN"])
-USER_HOME="/home/foss" #os.environ['HOME']
+USER_HOME="/home/timelord" #os.environ['HOME']
 LOG_PATH=USER_HOME+"/logs/"
 NVM_BIN=USER_HOME+"/.nvm/versions/node/v12.16.3/bin"#os.environ['NVM_BIN']
 g=Github("ooo")
+
 
 
 with open('config.yml') as f:
@@ -75,7 +76,7 @@ for repo in g.get_user().get_repos():
                             f.write("\n")
                             f.write("RemainAfterExit=yes")
                             f.write("\n\n")
-                            f.write("ExecStart=/usr/bin/python3 /home/foss/projects/auto-deployer/HttpStarter.py "+str(configData['port'])+" "+repo_location+" "+LOG_PATH+repo.name)
+                            f.write("ExecStart=/usr/bin/python3 /home/timelord/projects/auto-deployer/HttpStarter.py "+str(configData['port'])+" "+repo_location+" "+LOG_PATH+repo.name)
                             f.write("\n\n")
                             f.write("[Install]\nWantedBy=multi-user.target")
                             f.close
@@ -85,11 +86,11 @@ for repo in g.get_user().get_repos():
                     #nginx configuration
                     print("nginx time")
                     domain_name=configData['domain']
-                    nginx_config_file="/etc/nginx/sites-available/"+domain_name
+                    nginx_config_file="/etc/nginx/sites-available/"+repo.name+os.sep+domain_name
                     print(nginx_config_file)
                     if(os.path.exists(nginx_config_file)==False):
                         print("file not found")
-                       #os.system("mkdir -p /etc/nginx/sites-available/"+repo.name+os.sep)
+                        os.system("mkdir -p /etc/nginx/sites-available/"+repo.name+os.sep)
                         with open(nginx_config_file,'w+') as fi:
                             print("writing file")
                             fi.write("server { ")
@@ -112,7 +113,7 @@ for repo in g.get_user().get_repos():
                             fi.write("\n") 
                             fi.write(" }")
                             fi.close
-                        os.system("ln -s /etc/nginx/sites-available/"+domain_name+" /etc/nginx/sites-enabled/ -v ")
+                        os.system("ln -s /etc/nginx/sites-available/"+repo.name+" /etc/nginx/sites-enabled/ -v ")
                         os.system("service nginx restart")
                             
 
