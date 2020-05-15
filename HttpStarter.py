@@ -3,13 +3,15 @@ import sys
 import argparse
 from datetime import datetime
 
-HTTP_BIN="/home/timelord/.nvm/versions/node/v12.16.3/bin/http-server"#os.environ['NVM_BIN']
+HTTP_BIN="/home/foss/.nvm/versions/node/v12.16.3/bin/http-server"#os.environ['NVM_BIN']
 
 args=sys.argv
 print(type(args))
 port=args[1]
 web_dir=args[2]
 log_path=args[3]
+if(os.path.exists(log_path)==False):
+    os.system("mkdir -p "+log_path)
 print(args)
 timeNow=datetime.now()
 current_datetime=timeNow.strftime("%Y-%m-%d_%H:%M:%S")
