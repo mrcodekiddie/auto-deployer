@@ -11,7 +11,7 @@ import re
 USER_HOME="/home/foss" #os.environ['HOME']
 LOG_PATH=USER_HOME+"/logs/"
 NVM_BIN=USER_HOME+"/.nvm/versions/node/v12.16.3/bin"#os.environ['NVM_BIN']
-g=Github("04fe4e29649aaaabdfa")
+g=Github("ooooo")
 
 
 with open('config.yml') as f:
