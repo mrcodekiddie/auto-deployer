@@ -11,7 +11,7 @@ import re
 USER_HOME="/home/timelord" #os.environ['HOME']
 LOG_PATH=USER_HOME+"/logs/"
 NVM_BIN="/home/timelord/.nvm/versions/node/v12.16.3/bin"#os.environ['NVM_BIN']
-g=Github("bowwww")
+g=Github("ga")
 
 
 with open('config.yml') as f:
@@ -81,6 +81,42 @@ for repo in g.get_user().get_repos():
                             f.close
                             os.system("systemctl enable "+repo.name+".service")
                             os.system("systemctl start "+repo.name+".service")
+
+                    #nginx configuration
+                    print("nginx time")
+                    domain_name=configData['domain']
+                    nginx_config_file="/etc/nginx/sites-available/"+repo.name+os.sep+domain_name
+                    print(nginx_config_file)
+                    if(os.path.exists(nginx_config_file)==False):
+                        print("file not found")
+                        os.system("mkdir -p /etc/nginx/sites-available/"+repo.name+os.sep)
+                        with open(nginx_config_file,'w+') as fi:
+                            print("writing file")
+                            fi.write("server { ")
+                            fi.write("\n")
+                            fi.write("server_name "+domain_name+";")
+                            fi.write("\n") 
+                            fi.write("location / { ")
+                            fi.write("\n")
+                            fi.write("proxy_pass http://127.0.0.1:"+str(configData['port']))
+                            fi.write("\n")
+                            fi.write("proxy_set_header Host $host;")
+                            fi.write("\n")
+                            fi.write("proxy_set_header X-Real-IP $remote_addr;")
+                            fi.write("\n")
+                            fi.write("proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;")
+                            fi.write("\n")
+                            fi.write("proxy_set_header X-Forwarded-Proto $scheme;")
+                            fi.write("\n") 
+                            fi.write(" }")
+                            fi.write("\n") 
+                            fi.write(" }")
+                            fi.close
+                        os.system("ln -s /etc/nginx/sites-available/"+repo.name+" /etc/nginx/sites-enabled/ -v ")
+                        os.system("service nginx restart")
+                            
+
+
 
                     else:
                         if(isOpen('127.0.0.1',configData['port'])):
