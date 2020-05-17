@@ -10,11 +10,12 @@ import re
 #GITHUB_AUTH_TOKEN=(os.environ["GITHUB_AUTH_TOKEN"])
 USER_HOME="/home/foss" #os.environ['HOME']
 LOG_PATH=USER_HOME+"/logs/"
-NVM_BIN=USER_HOME+"/.nvm/versions/node/v12.16.3/bin"#os.environ['NVM_BIN']
-g=Github("ooooo")
+NVM_BIN=USER_HOME+"/usr/local/node_lts/bin"#os.environ['NVM_BIN']
+g=Github("b7aabdfa")
 
+print(os.getcwd())
 
-with open('config.yml') as f:
+with open(USER_HOME+"/projects/auto-deployer/config.yml") as f:
     config =yaml.load(f,Loader=yaml.FullLoader)
     print(type(config))
 
